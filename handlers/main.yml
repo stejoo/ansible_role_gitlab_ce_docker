@@ -2,9 +2,10 @@
 - name: Restart gitlab
   ansible.builtin.command:
     cmd: docker restart "{{ gitlab__name }}"
-  when: >
-    gitlab__container_state == 'started' or
-    gitlab__container_state == 'healthy'
+  when:
+    - gitlab__container_allow_restart
+    - gitlab__container_state == 'started' or
+      gitlab__container_state == 'healthy'
   ignore_errors: true
   register: gitlab_restart_result
   failed_when: false
