@@ -7,9 +7,8 @@ external_url 'http://{{ gitlab__hostname }}:{{ gitlab__port_web_http }}'
 
 gitlab_rails['lfs_enabled'] = true
 
-# Always listen on port 80 inside container (Docker maps host port to container port 80)
-# The external_url port is for external access, not the internal listen port
-nginx['listen_port'] = 80
+# Enabling this causes a duplicate listen on port 80 when running GitLab without external nginx
+# nginx['listen_port'] = 80
 
 # Ensure Puma uses Unix socket (default) and doesn't try to bind to TCP port from external_url
 # Puma should not bind to the port specified in external_url
