@@ -132,6 +132,7 @@
     shm_size: 256M
   when: "gitlab__network_mode is defined and gitlab__network_mode == 'host'"
   notify: Restart gitlab
+  no_log: "{{ not gitlab__container_debug | default(true) }}"
 
 - name: Run GitLab container in bridged mode
   community.docker.docker_container:
@@ -151,6 +152,7 @@
     shm_size: 256M
   when: "gitlab__network_mode is undefined or gitlab__network_mode == ''"
   notify: Restart gitlab
+  no_log: "{{ not gitlab__container_debug | default(true) }}"
 
 - name: Ensure directory permissions after container creation (idempotence fix)
   ansible.builtin.file:
